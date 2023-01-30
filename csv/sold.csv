@@ -1,1 +1,1 @@
-id,bought_id,sell_date,sell_price,expired
+id,bought_id,sell_date,buy_price,sell_price,expired

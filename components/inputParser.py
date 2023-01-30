@@ -15,75 +15,46 @@ def create_parser():
     )
 
     # Get the basic instruction
-    instruction = parser.add_mutually_exclusive_group()
+    instruction = parser.add_subparsers(
+        metavar="Subcommands",
+        title="SuperPy",
+        help="Use [subcommand] -h to get extra info on usage of each subcommand",
+    )
     # buy instruction
-    instruction.add_argument(
+    buy = instruction.add_parser(
         "buy",
-        nargs="?",
-        action="store",
         help="Basic action type for buying an item.",
     )
-    # sell instruction
-    instruction.add_argument(
-        "sell",
-        nargs="?",
-        action="store",
-        help="Basic action type for selling an item.",
-    )
-    # report instruction
-    instruction.add_argument(
-        "report",
-        nargs="?",
-        action="store",
-        help="Basic action type for getting a report.",
+
+    buy.add_argument("buy", nargs="?", default=True)
+
+    buy.add_argument(
+        "--name_product",
+        "-n",
+        help="supply product name for the product to buy",
+        required=True,
     )
 
-    reports = parser.add_argument_group("reports")
-    # get the report for today
-    reports.add_argument(
-        "--today",
-        "-t",
-        action="store_true",
-        required=False,
-        help="Get the requested report for today",
-    )
-    # get the report for yesterday
-    reports.add_argument(
-        "--yesterday",
-        "-y",
-        action="store_true",
-        required=False,
-        help="Get the requested report for yesterday",
-    )
-
-    # advance the date by x argument
-    parser.add_argument(
-        "--advance-time",
-        "-adv",
-        metavar="Advance day",
-        type=int,
-        action="store",
-        help="To advance the current day by [int]",
-    )
-
-    # product name argument
-    product = parser.add_argument_group("product")
-    product.add_argument(
-        "--product-name",
-        "-prod",
-        required=False,
-        type=str,
-        action="store",
-        help="",
-    )
-
-    # product price argument
-    product.add_argument(
+    buy.add_argument(
         "--price",
-        required=False,
-        type=float,
-        action="store",
-        help="",
+        "-p",
+        help="supply the price of the product",
+        required=True,
+    )
+
+    buy.add_argument(
+        "--amount",
+        "-a",
+        default=1,
+        help="supply the amount of products purchased (default=1)",
+    )
+
+    buy.add_argument(
+        "--expiration",
+        "-e",
+        type=int,
+        default=10,
+        help="supply the amount in days of the shelf life of a product (default=10)",
     )
 
     return parser

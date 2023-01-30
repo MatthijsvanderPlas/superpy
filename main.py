@@ -1,9 +1,7 @@
 # Imports
 from components.inputParser import create_parser
-import csv
+from components.buy import handleBuy
 import sys
-from datetime import date
-from time import sleep
 from console import console, err_console
 
 sys.path.insert(0, "./components")
@@ -19,7 +17,13 @@ def main():
     # Accept arguments from argparse
     parser = create_parser()
     parsed = parser.parse_args()
-    console.print(f"[blue bold]{parsed}")
+    # Buy command was given and now parsed
+    if parsed.buy:
+        console.print(
+            f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
+        )
+     
+        handleBuy(parsed.name_product, parsed.price, parsed.amount, parsed.expiration)
 
 
 if __name__ == "__main__":
