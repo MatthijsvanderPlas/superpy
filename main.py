@@ -1,6 +1,7 @@
 # Imports
 from components.inputParser import create_parser
 from components.buy import handleBuy
+from components.sell import handleSell
 import sys
 from console import console, err_console
 
@@ -18,12 +19,17 @@ def main():
     parser = create_parser()
     parsed = parser.parse_args()
     # Buy command was given and now parsed
-    if parsed.buy:
+    if hasattr(parsed, "buy"):
         console.print(
             f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
         )
-     
         handleBuy(parsed.name_product, parsed.price, parsed.amount, parsed.expiration)
+
+    if hasattr(parsed, "sell"):
+        console.print(
+            f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
+        )
+        handleSell(parsed.name_product, parsed.price, parsed.amount)
 
 
 if __name__ == "__main__":

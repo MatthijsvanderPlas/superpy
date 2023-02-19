@@ -1,17 +1,19 @@
 import csv
 import sys
 import random
-from datetime import datetime, timedelta
+from datetime import timedelta
+from utils.getDateFromFile import getDateFromFile
 
 sys.path.insert(0, "../csv")
+sys.path.insert(0, "../utils")
 
 
 def handleBuy(name, price, amount, expiration):
-    with open("./day/day.txt") as f:
-        line = "".join(f.readline().split("-"))
-        day = datetime.strptime(line, "%Y%m%d").date()
-        expiration = day + timedelta(days=expiration)
+    # Get the current day from file to set the expiration date
+    day = getDateFromFile()
+    expiration = day + timedelta(days=expiration)
 
+    # Write new product to the inventory
     with open("./csv/inventory.csv", "a", newline="") as inv:
         writer = csv.writer(inv, delimiter=",")
         id = random.randint(1, 10000000)

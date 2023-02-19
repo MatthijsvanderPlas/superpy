@@ -57,4 +57,32 @@ def create_parser():
         help="supply the amount in days of the shelf life of a product (default=10)",
     )
 
+    sell = instruction.add_parser(
+        "sell",
+        help="Basic action type for selling an item.",
+    )
+
+    sell.add_argument("sell", nargs="?", default=True)
+
+    sell.add_argument(
+        "--name_product",
+        "-n",
+        help="supply product name for the product to sell",
+        required=True,
+    )
+
+    sell.add_argument(
+        "--price",
+        "-p",
+        help="supply the price of the product",
+        required=True,
+    )
+
+    sell.add_argument(
+        "--amount",
+        "-a",
+        default=1,
+        help="supply the amount of products purchased (default=1)",
+    )
+
     return parser
