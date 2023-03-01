@@ -3,7 +3,7 @@ from components.inputParser import create_parser
 from components.buy import handleBuy
 from components.sell import handleSell
 import sys
-from console import console, err_console
+from console import console
 
 sys.path.insert(0, "./components")
 
@@ -23,13 +23,13 @@ def main():
         console.print(
             f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
         )
-        handleBuy(parsed.name_product, parsed.price, parsed.amount, parsed.expiration)
+        handleBuy(parsed)
 
     if hasattr(parsed, "sell"):
         console.print(
             f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
         )
-        handleSell(parsed.name_product, parsed.price, parsed.amount)
+        handleSell(parsed)
 
 
 if __name__ == "__main__":

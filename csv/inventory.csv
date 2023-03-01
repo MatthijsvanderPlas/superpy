@@ -1,5 +1,2 @@
-id,name_product,buy_date,price,amount,expiration
-1,Orange,2020-01-01,1,20,2020-01-11
-2,Apple,2020-01-01,2,1,2020-01-06
-3,Banana,2020-01-01,2.65,1,2020-01-13
-9426010,Strawberry,2020-01-01,0.55,300,2020-01-13
+id,name_product,amount
+7083257,strawberry,10

@@ -10,29 +10,29 @@ def handleSell(name, price, amount):
     # set boolean isInStock to false
     isInStock = False
     # set boolean isAbundant to true, later will be checked with
-    isAbundant = True
-    inStockAmount = 0
+    amountInStock = 0
 
     # Get the current day from file to set the sell date
     day = getDateFromFile()
 
     # Check if the product is in Stock, if there is enough in stock to meet the sell.
     with open("./csv/inventory.csv") as inv:
-        lines = csv.reader(inv)
+        lines = csv.DictReader(inv)
         for line in lines:
-            if line[1] == name:
+            if line["name_product"] == name:
                 isInStock = True
-                inStock = int(line[4])
-                if inStock < int(amount):
-                    isAbundant = False
-                    inStockAmount = line[4]
+                amountInStock += int(line["amount"])
 
     # Write down the sell into the sold.csv
     if isInStock:
         console.print("I was found and am in stock!")
-        if not isAbundant:
-            console.print(f"There are only {inStockAmount}, you asked for {amount}")
-        console.print(name, price, amount)
+        if amountInStock < int(amount):
+            console.print(f"There are only {amountInStock}, you asked for {amount}")
+            console.print(name, price, amount)
+        else:
+            console.print(
+                f"You got your {name} all {amount}. Left:  {amountInStock - int(amount)}"
+            )
     else:
-        err_console.print("ERROR: Item not in stock")
+        err_console.print("ERROR: Product not in stock")
     # with open("./csv/sold.csv", "a", newline="") as s:
