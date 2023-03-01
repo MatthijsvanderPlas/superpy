@@ -1,9 +1,9 @@
 # Imports
 from components.inputParser import create_parser
+from utils.advanceDate import advance
 from components.buy import handleBuy
 from components.sell import handleSell
 import sys
-from console import console
 
 sys.path.insert(0, "./components")
 
@@ -20,16 +20,14 @@ def main():
     parsed = parser.parse_args()
     # Buy command was given and now parsed
     if hasattr(parsed, "buy"):
-        console.print(
-            f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
-        )
         handleBuy(parsed)
+        # displayInventory()
 
     if hasattr(parsed, "sell"):
-        console.print(
-            f"[blue bold]Product: {parsed.name_product}, Price: {parsed.price}, Amount: {parsed.amount}"
-        )
         handleSell(parsed)
+
+    if hasattr(parsed, "advance_date"):
+        advance(parsed.advance_date)
 
 
 if __name__ == "__main__":

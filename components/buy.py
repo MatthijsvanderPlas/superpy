@@ -2,6 +2,7 @@ import csv
 import sys
 import random
 from datetime import timedelta
+from console import console
 from utils.getDateFromFile import getDateFromFile
 
 sys.path.insert(0, "../csv")
@@ -18,16 +19,18 @@ def handleBuy(parserInfo):
     day = getDateFromFile()
     expiration = day + timedelta(days=inputExpiration)
 
-    # Write new product to the inventory
-    message = ""
-    with open("./csv/bought.csv", "a", newline="") as inv:
-        writer = csv.writer(inv, delimiter=",")
+    try:
+        # Write new product to the inventory
+        # Append line to bought.csv
+        with open("./csv/bought.csv", "a", newline="") as inv:
+            writer = csv.writer(inv, delimiter=",")
+            writer.writerow([id, name, day, price, amount, expiration])
 
-        writer.writerow([id, name, day, price, amount, expiration])
-        message += "Bought "
+        # Append line to inventory.csv
+        with open("./csv/inventory.csv", "a", newline="") as inv:
+            writer = csv.writer(inv, delimiter=",")
+            writer.writerow([id, name, amount])
 
-    with open("./csv/inventory.csv", "a", newline="") as inv:
-        writer = csv.writer(inv, delimiter=",")
-        writer.writerow([id, name, amount])
-        message += "Inventory"
-    print(message)
+        console.print("[blue bold]OK")
+    except:
+        print("An exception occurred")

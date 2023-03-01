@@ -85,4 +85,13 @@ def create_parser():
         help="supply the amount of products purchased (default=1)",
     )
 
+    # advance day instruction
+    parser.add_argument(
+        "--advance-date",
+        "-d",
+        type=int,
+        default=1,
+        help="Advance day by X days (default=1)",
+    )
+
     return parser

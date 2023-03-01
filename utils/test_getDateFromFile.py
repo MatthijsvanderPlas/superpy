@@ -1,9 +1,8 @@
-from utils import getDateFromFile
-
-type
+import datetime
+from utils.getDateFromFile import getDateFromFile
 
 
 def test_getDateFromFile():
-    def test_output(self):
-        result = getDateFromFile()
-        assert isinstance(result, int)
+
+    result = getDateFromFile()
+    assert isinstance(result, datetime.date)
