@@ -9,7 +9,7 @@ import argparse
 def create_parser():
     parser = argparse.ArgumentParser(
         prog="SuperPy",
-        usage="SuperPy [buy | sell | report]",
+        usage="SuperPy [buy | sell | report | advance]",
         description="Welcome to your favorite local grocery store",
         epilog="Please use the above help to work with our program",
     )
@@ -29,8 +29,9 @@ def create_parser():
     buy.add_argument("buy", nargs="?", default=True)
 
     buy.add_argument(
-        "--name_product",
+        "--name",
         "-n",
+        metavar="PRODUCT",
         help="supply product name for the product to buy",
         required=True,
     )
@@ -38,6 +39,7 @@ def create_parser():
     buy.add_argument(
         "--price",
         "-p",
+        metavar="PRICE",
         help="supply the price of the product",
         required=True,
     )
@@ -65,7 +67,7 @@ def create_parser():
     sell.add_argument("sell", nargs="?", default=True)
 
     sell.add_argument(
-        "--name_product",
+        "--name",
         "-n",
         help="supply product name for the product to sell",
         required=True,
@@ -86,12 +88,45 @@ def create_parser():
     )
 
     # advance day instruction
-    parser.add_argument(
-        "--advance-date",
+    advance = instruction.add_parser(
+        "advance",
+        help="Advance day by X days (default=1)",
+    )
+
+    advance.add_argument("advance", nargs="?", default=True)
+
+    advance.add_argument(
         "-d",
+        metavar="DAYS",
         type=int,
         default=1,
         help="Advance day by X days (default=1)",
     )
+
+    # report instruction
+    report = instruction.add_parser(
+        "report",
+        help="Produce several reports",
+    )
+
+    report.add_argument("report", nargs="?", default=True)
+
+    reportSubcommands = report.add_subparsers(
+        metavar="Subcommands",
+        title="Report",
+        help="Use [subcommand] -h to get extra info on usage of each subcommand",
+    )
+
+    inventory = reportSubcommands.add_parser("inventory", help="Show current inventory")
+
+    inventory.add_argument("inventory", nargs="?", default=True)
+
+    revenue = reportSubcommands.add_parser("revenue", help="Show current revenue")
+
+    revenue.add_argument("revenue", nargs="?", default=True)
+
+    profit = reportSubcommands.add_parser("profit", help="Show current profit")
+
+    profit.add_argument("profit", nargs="?", default=True)
 
     return parser

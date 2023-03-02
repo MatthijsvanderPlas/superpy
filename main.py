@@ -26,8 +26,22 @@ def main():
     if hasattr(parsed, "sell"):
         handleSell(parsed)
 
-    if hasattr(parsed, "advance_date"):
-        advance(parsed.advance_date)
+    if hasattr(parsed, "advance"):
+        advance(parsed.d)
+
+    if hasattr(parsed, "report"):
+        if hasattr(parsed, "inventory"):
+            print("Inventory")
+        if hasattr(parsed, "revenue"):
+            print("Revenue")
+        if hasattr(parsed, "profit"):
+            print("Profit")
+
+    if hasattr(parsed, "reset"):
+        print("Reset")
+
+    if hasattr(parsed, "demo"):
+        print("Load program with dummy data")
 
 
 if __name__ == "__main__":
