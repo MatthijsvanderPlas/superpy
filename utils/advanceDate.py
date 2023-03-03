@@ -9,7 +9,7 @@ def advance(days):
         with open("./day/day.txt", "w") as f:
             newDay = day + timedelta(days=days)
             console.print(f"[red]Current day set to: {newDay}")
-            f.write(str(newDay))
+            f.write(newDay.strftime("%d-%m-%Y"))
         console.print("[blue bold]OK")
     except:
         err_console.print("Failure!")

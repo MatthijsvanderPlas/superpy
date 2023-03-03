@@ -1,6 +1,6 @@
 # buy a product and add to inventory
 # sell a product and remove from inventory
-# advance the internal date and then check for expired goods add those to the sold.csv as a negative
+# advance the internal date and then check for expired goods add those to the sold.csv as sold at 0
 # print out different reports
 
 import argparse
@@ -40,6 +40,7 @@ def create_parser():
         "--price",
         "-p",
         metavar="PRICE",
+        type=float,
         help="supply the price of the product",
         required=True,
     )
@@ -47,6 +48,7 @@ def create_parser():
     buy.add_argument(
         "--amount",
         "-a",
+        metavar="[AMOUNT]",
         default=1,
         help="supply the amount of products purchased (default=1)",
     )
@@ -54,6 +56,7 @@ def create_parser():
     buy.add_argument(
         "--expiration",
         "-e",
+        metavar="[EXPIRATION]",
         type=int,
         default=10,
         help="supply the amount in days of the shelf life of a product (default=10)",
@@ -69,6 +72,7 @@ def create_parser():
     sell.add_argument(
         "--name",
         "-n",
+        metavar="NAME",
         help="supply product name for the product to sell",
         required=True,
     )
@@ -76,6 +80,8 @@ def create_parser():
     sell.add_argument(
         "--price",
         "-p",
+        metavar="PRICE",
+        type=float,
         help="supply the price of the product",
         required=True,
     )
@@ -83,6 +89,7 @@ def create_parser():
     sell.add_argument(
         "--amount",
         "-a",
+        metavar="[AMOUNT]",
         default=1,
         help="supply the amount of products purchased (default=1)",
     )

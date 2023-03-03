@@ -1,9 +1,12 @@
 # Imports
 from components.inputParser import create_parser
+from components.inventory import displayCurrentInventory
 from utils.advanceDate import advance
+from utils.utils import checkForItemsExpired
 from components.buy import handleBuy
 from components.sell import handleSell
 import sys
+
 
 sys.path.insert(0, "./components")
 
@@ -27,11 +30,14 @@ def main():
         handleSell(parsed)
 
     if hasattr(parsed, "advance"):
+        # advance the date
         advance(parsed.d)
+        # check for items that might have gone out of date and handle accordingly
+        checkForItemsExpired()
 
     if hasattr(parsed, "report"):
         if hasattr(parsed, "inventory"):
-            print("Inventory")
+            displayCurrentInventory()
         if hasattr(parsed, "revenue"):
             print("Revenue")
         if hasattr(parsed, "profit"):

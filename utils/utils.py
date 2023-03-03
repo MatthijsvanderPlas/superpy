@@ -1,4 +1,7 @@
 import csv
+from datetime import datetime
+
+from utils.getDateFromFile import getDateFromFile
 
 
 def appendRowToBoughtCsv(inputId, name, day, price, amount, expiration):
@@ -73,3 +76,31 @@ def getAllItemsByNameFromInventoryCsv(name) -> list:
                     }
                 )
     return inStock
+
+
+def getItemFromBoughtCsvById(inputId):
+    with open("./csv/bought.csv") as inv:
+        lines = csv.DictReader(inv)
+        for line in lines:
+            if int(line["id"]) == inputId:
+                return line
+
+
+def checkForItemsExpired():
+    newLines = []
+    day = getDateFromFile()
+    with open("./csv/inventory.csv") as inv:
+        lines = csv.DictReader(inv)
+        for line in lines:
+            item = getItemFromBoughtCsvById(int(line["id"]))
+            expirationDate = datetime.strptime(item["expiration"], "%d-%m-%Y").date()
+            if day > expirationDate:
+                # product expired (sell at price 0)
+                removeLineFromInventoryCsv(int(line["id"]))
+                writeLineToSoldCsv(line["id"], line["name"], line["amount"], day, 0)
+            else:
+                newLines.append(line)
+
+    resetInventory()
+    for line in newLines:
+        appendRowToInventoryCsv(line["id"], line["name"], line["amount"])

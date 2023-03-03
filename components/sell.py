@@ -49,7 +49,10 @@ def handleSell(inputObj):
                     break
                 else:
                     writeLineToSoldCsv(stock["id"], name, amount, day, price)
-                    adjustLineInInventoryCsv(int(stock["id"]), amount)
+                    if amount == stock["amount"]:
+                        removeLineFromInventoryCsv(int(stock["id"]))
+                    else:
+                        adjustLineInInventoryCsv(int(stock["id"]), amount)
                     # Set amount to 0 to reset the loop as the purchase has been fulfilled
                     amount = 0
                     sold += amount

@@ -11,14 +11,14 @@ sys.path.insert(0, "../utils")
 
 
 def handleBuy(parserInfo):
-    newId = random.randint(1, 10000000)
+    newId = random.randint(10000000, 99999999)
     name = parserInfo.name.lower()
     price = parserInfo.price
     amount = parserInfo.amount
     inputExpiration = parserInfo.expiration
     # Get the current day from file to set the expiration date
     day = getDateFromFile()
-    expiration = day + timedelta(days=inputExpiration)
+    expiration = (day + timedelta(days=inputExpiration)).strftime("%d-%m-%Y")
 
     try:
         # Write new product to the inventory
