@@ -8,7 +8,7 @@ from utils.utils import getItemFromBoughtCsvById
 
 
 def displayCurrentInventory():
-    day = getDateFromFile()
+    day = getDateFromFile("str")
     table = Table(min_width=100)
     with open("./csv/inventory.csv") as inv:
         lines = csv.reader(inv)

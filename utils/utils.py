@@ -82,13 +82,23 @@ def getItemFromBoughtCsvById(inputId):
     with open("./csv/bought.csv") as inv:
         lines = csv.DictReader(inv)
         for line in lines:
-            if int(line["id"]) == inputId:
+            if int(line["id"]) == int(inputId):
                 return line
+
+
+def getAllItemsFromSoldCsvByDate(inputDate):
+    sold = []
+    with open("./csv/sold.csv") as s:
+        lines = csv.DictReader(s)
+        for line in lines:
+            if line["sell_date"] == inputDate:
+                sold.append(line)
+    return sold
 
 
 def checkForItemsExpired():
     newLines = []
-    day = getDateFromFile()
+    day = getDateFromFile("date")
     with open("./csv/inventory.csv") as inv:
         lines = csv.DictReader(inv)
         for line in lines:
@@ -97,7 +107,9 @@ def checkForItemsExpired():
             if day > expirationDate:
                 # product expired (sell at price 0)
                 removeLineFromInventoryCsv(int(line["id"]))
-                writeLineToSoldCsv(line["id"], line["name"], line["amount"], day, 0)
+                writeLineToSoldCsv(
+                    line["id"], line["name"], line["amount"], expirationDate, 0
+                )
             else:
                 newLines.append(line)
 

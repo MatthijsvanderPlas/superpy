@@ -1,7 +1,7 @@
 import csv
 import sys
 import random
-from datetime import timedelta
+from datetime import datetime, timedelta
 from console import console
 from utils.getDateFromFile import getDateFromFile
 from utils.utils import appendRowToBoughtCsv, appendRowToInventoryCsv
@@ -17,13 +17,14 @@ def handleBuy(parserInfo):
     amount = parserInfo.amount
     inputExpiration = parserInfo.expiration
     # Get the current day from file to set the expiration date
-    day = getDateFromFile()
+    day = getDateFromFile("date")
+    euDay = day.strftime("%d-%m-%Y")
     expiration = (day + timedelta(days=inputExpiration)).strftime("%d-%m-%Y")
 
     try:
         # Write new product to the inventory
         # Append line to bought.csv
-        appendRowToBoughtCsv(newId, name, day, price, amount, expiration)
+        appendRowToBoughtCsv(newId, name, euDay, price, amount, expiration)
 
         # Append line to inventory.csv
         appendRowToInventoryCsv(newId, name, amount)

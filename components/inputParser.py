@@ -132,8 +132,38 @@ def create_parser():
 
     revenue.add_argument("revenue", nargs="?", default=True)
 
+    revenue.add_argument(
+        "--today", action="store_true", default=False, help="Returns revenue for today."
+    )
+    revenue.add_argument(
+        "--yesterday",
+        action="store_true",
+        default=False,
+        help="Returns revenue for yesterday.",
+    )
+    revenue.add_argument(
+        "--date",
+        "-d",
+        help="Specify a certain date or period. For example '03-2020' returns revenue for the month March of 2020",
+    )
+
     profit = reportSubcommands.add_parser("profit", help="Show current profit")
 
     profit.add_argument("profit", nargs="?", default=True)
+
+    profit.add_argument(
+        "--today", action="store_true", default=False, help="Returns profit for today."
+    )
+    profit.add_argument(
+        "--yesterday",
+        action="store_true",
+        default=False,
+        help="Returns profit for yesterday.",
+    )
+    profit.add_argument(
+        "--date",
+        "-d",
+        help="Specify a certain date or period. For example '03-2020' returns profit for the month March of 2020",
+    )
 
     return parser

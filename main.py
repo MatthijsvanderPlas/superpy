@@ -1,6 +1,7 @@
 # Imports
 from components.inputParser import create_parser
 from components.inventory import displayCurrentInventory
+from components.profit import handleProfitRequest
 from utils.advanceDate import advance
 from utils.utils import checkForItemsExpired
 from components.buy import handleBuy
@@ -39,9 +40,13 @@ def main():
         if hasattr(parsed, "inventory"):
             displayCurrentInventory()
         if hasattr(parsed, "revenue"):
-            print("Revenue")
+            print(parsed.revenue)
+            print(parsed.today)
+            print(parsed.yesterday)
+            print(parsed.date)
         if hasattr(parsed, "profit"):
-            print("Profit")
+            if parsed.today:
+                handleProfitRequest("today")
 
     if hasattr(parsed, "reset"):
         print("Reset")

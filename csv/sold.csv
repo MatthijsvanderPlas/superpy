@@ -1,2 +1,6 @@
-id,bought_id,sell_date,sell_price
-78221201,banana,25,2020-01-22,0
+id,name,amount,sell_date,sell_price
+78221201,banana,25,03-01-2020,1
+63402618,orange,25,03-01-2020,1.2
+63402618,orange,25,05-02-2020,0
+14331227,orange,50,05-02-2020,0
+73406158,orange,50,05-02-2020,0

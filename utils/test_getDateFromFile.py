@@ -1,5 +1,5 @@
 import datetime
-from utils.getDateFromFile import getDateFromFile
+from getDateFromFile import getDateFromFile
 
 
 def test_getDateFromFile():

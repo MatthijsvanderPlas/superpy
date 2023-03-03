@@ -21,7 +21,7 @@ def handleSell(inputObj):
     sold = 0
 
     # Get the current day from file to set the sell date
-    day = getDateFromFile()
+    day = getDateFromFile("str")
 
     # Go through the inventory and get the lines that meet the product_name
     inStock = getAllItemsByNameFromInventoryCsv(name)
