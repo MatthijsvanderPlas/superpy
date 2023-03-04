@@ -166,4 +166,12 @@ def create_parser():
         help="Specify a certain date or period. For example '03-2020' returns profit for the month March of 2020",
     )
 
+    reset = instruction.add_parser("reset", help="Reset database")
+
+    reset.add_argument("reset", nargs="?", default=True)
+
+    demo = instruction.add_parser("demo", help="Reset database")
+
+    demo.add_argument("demo", nargs="?", default=True)
+
     return parser

@@ -62,6 +62,34 @@ def resetInventory():
         writer.writerow(["id", "name", "amount"])
 
 
+def resetBought():
+    with open("./csv/bought.csv", "w") as inv:
+        writer = csv.writer(inv)
+        writer.writerow(["id", "name", "buy_date", "price", "amount", "expiration"])
+
+
+def resetSold():
+    with open("./csv/sold.csv", "w") as inv:
+        writer = csv.writer(inv)
+        writer.writerow(["id", "name", "amount", "sell_date", "sell_price"])
+
+
+def resetDay():
+    with open(
+        "./day/day.txt",
+        "w",
+    ) as day:
+        writer = csv.writer(day, lineterminator="")
+        writer.writerow(["01-01-2020"])
+
+
+def resetAll():
+    resetBought()
+    resetInventory()
+    resetSold()
+    resetDay()
+
+
 def getAllItemsByNameFromInventoryCsv(name) -> list:
     inStock = []
     with open("./csv/inventory.csv") as inv:
@@ -116,3 +144,25 @@ def checkForItemsExpired():
     resetInventory()
     for line in newLines:
         appendRowToInventoryCsv(line["id"], line["name"], line["amount"])
+
+
+def getProfitFromSoldItemsList(soldList):
+    totalSold = 0
+    totalBought = 0
+
+    for item in soldList:
+        totalSold += float(item["amount"]) * float(item["sell_price"])
+        buyPrice = getItemFromBoughtCsvById(item["id"])["price"]
+        totalBought += round(float(item["amount"]) * float(buyPrice), 2)
+
+    totalProfit = totalSold - totalBought
+    return totalProfit
+
+
+def getRevenueFromSoldItemsList(soldList):
+    totalSold = 0
+
+    for item in soldList:
+        totalSold += float(item["amount"]) * float(item["sell_price"])
+
+    return totalSold

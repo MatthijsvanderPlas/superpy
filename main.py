@@ -2,8 +2,9 @@
 from components.inputParser import create_parser
 from components.inventory import displayCurrentInventory
 from components.profit import handleProfitRequest
+from components.revenue import handleRevenueRequest
 from utils.advanceDate import advance
-from utils.utils import checkForItemsExpired
+from utils.utils import checkForItemsExpired, resetAll
 from components.buy import handleBuy
 from components.sell import handleSell
 import sys
@@ -40,16 +41,26 @@ def main():
         if hasattr(parsed, "inventory"):
             displayCurrentInventory()
         if hasattr(parsed, "revenue"):
-            print(parsed.revenue)
-            print(parsed.today)
-            print(parsed.yesterday)
-            print(parsed.date)
+            if parsed.today:
+                handleRevenueRequest("today")
+            elif parsed.yesterday:
+                handleRevenueRequest("yesterday")
+            elif parsed.date:
+                handleRevenueRequest("date", parsed.date)
+            else:
+                handleRevenueRequest("today")
         if hasattr(parsed, "profit"):
             if parsed.today:
                 handleProfitRequest("today")
+            elif parsed.yesterday:
+                handleProfitRequest("yesterday")
+            elif parsed.date:
+                handleProfitRequest("date", parsed.date)
+            else:
+                handleProfitRequest("today")
 
     if hasattr(parsed, "reset"):
-        print("Reset")
+        resetAll()
 
     if hasattr(parsed, "demo"):
         print("Load program with dummy data")

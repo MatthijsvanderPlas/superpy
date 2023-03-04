@@ -2,25 +2,25 @@ from datetime import timedelta
 from utils.getDateFromFile import getDateFromFile
 from utils.utils import (
     getAllItemsFromSoldCsvByDate,
-    getProfitFromSoldItemsList,
+    getRevenueFromSoldItemsList,
 )
 from console import console
 
 
-def handleProfitRequest(input, date=None):
+def handleRevenueRequest(input, date=None):
 
     if input == "today":
         day = getDateFromFile("str")
         soldItems = getAllItemsFromSoldCsvByDate(day)
-        totalProfit = getProfitFromSoldItemsList(soldItems)
-        console.print(f"Today's profit so far: {totalProfit}")
+        totalRevenue = getRevenueFromSoldItemsList(soldItems)
+        console.print(f"Today's revenue so far: {totalRevenue}")
 
     if input == "yesterday":
         day = getDateFromFile("date")
         day = day + timedelta(days=-1)
         soldItems = getAllItemsFromSoldCsvByDate(day)
-        totalProfit = getProfitFromSoldItemsList(soldItems)
-        console.print(f"Yesterdays profit: {totalProfit}")
+        totalRevenue = getRevenueFromSoldItemsList(soldItems)
+        console.print(f"Yesterdays revenue: {totalRevenue}")
 
     if input == "date":
         print(f"Entered date: {date}")

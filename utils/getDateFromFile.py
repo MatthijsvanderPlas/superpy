@@ -12,6 +12,7 @@ def getDateFromFile(type):
         return day
 
     if type == "date":
+
         with open("./day/day.txt") as f:
             line = "".join(f.readline().split("-"))
             day = datetime.strptime(line, "%d%m%Y").date()
