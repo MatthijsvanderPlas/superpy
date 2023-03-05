@@ -119,8 +119,13 @@ def getAllItemsFromSoldCsvByDate(inputDate):
     with open("./csv/sold.csv") as s:
         lines = csv.DictReader(s)
         for line in lines:
-            if line["sell_date"] == inputDate:
+            if inputDate in line["sell_date"]:
                 sold.append(line)
+                continue
+            elif line["sell_date"] in inputDate:
+                sold.append(line)
+                continue
+
     return sold
 
 
@@ -136,11 +141,16 @@ def checkForItemsExpired():
                 # product expired (sell at price 0)
                 removeLineFromInventoryCsv(int(line["id"]))
                 writeLineToSoldCsv(
-                    line["id"], line["name"], line["amount"], expirationDate, 0
+                    line["id"],
+                    line["name"],
+                    line["amount"],
+                    expirationDate.strftime("%d-%m-%Y"),
+                    0,
                 )
             else:
                 newLines.append(line)
 
+    # "Update" the inventory
     resetInventory()
     for line in newLines:
         appendRowToInventoryCsv(line["id"], line["name"], line["amount"])
@@ -166,3 +176,15 @@ def getRevenueFromSoldItemsList(soldList):
         totalSold += float(item["amount"]) * float(item["sell_price"])
 
     return totalSold
+
+
+def checkInputDate(inputDate):
+
+    if len(inputDate) == 2:
+        print(f"Week number: {inputDate}")
+    if len(inputDate) == 4:
+        print(f"Year: {inputDate}")
+    if len(inputDate) == 7:
+        print(f"Month: {inputDate}")
+    if len(inputDate) == 10:
+        print(f"Date: {inputDate}")

@@ -116,7 +116,7 @@ def create_parser():
         help="Produce several reports",
     )
 
-    report.add_argument("report", nargs="?", default=True)
+    report.add_argument("report", action="store_true", default=False)
 
     reportSubcommands = report.add_subparsers(
         metavar="Subcommands",
@@ -126,11 +126,15 @@ def create_parser():
 
     inventory = reportSubcommands.add_parser("inventory", help="Show current inventory")
 
-    inventory.add_argument("inventory", nargs="?", default=True)
+    inventory.add_argument(
+        "inventory", action="store_true", default=False, help="Shows current inventory"
+    )
 
-    revenue = reportSubcommands.add_parser("revenue", help="Show current revenue")
+    revenue = reportSubcommands.add_parser(
+        "revenue", help="Show revenue for different time periods"
+    )
 
-    revenue.add_argument("revenue", nargs="?", default=True)
+    revenue.add_argument("revenue", action="store_true", default=False)
 
     revenue.add_argument(
         "--today", action="store_true", default=False, help="Returns revenue for today."
@@ -144,12 +148,14 @@ def create_parser():
     revenue.add_argument(
         "--date",
         "-d",
-        help="Specify a certain date or period. For example '03-2020' returns revenue for the month March of 2020",
+        help="Specify a certain date or period. For example '03-2020' returns profit for the month March of 2020. Other options: 01-01-2020 (full date), 02 (week number), 02-2020 (month), 2020 (year) ",
     )
 
-    profit = reportSubcommands.add_parser("profit", help="Show current profit")
+    profit = reportSubcommands.add_parser(
+        "profit", help="Show profit for different time periods"
+    )
 
-    profit.add_argument("profit", nargs="?", default=True)
+    profit.add_argument("profit", action="store_true", default=False)
 
     profit.add_argument(
         "--today", action="store_true", default=False, help="Returns profit for today."
@@ -163,14 +169,14 @@ def create_parser():
     profit.add_argument(
         "--date",
         "-d",
-        help="Specify a certain date or period. For example '03-2020' returns profit for the month March of 2020",
+        help="Specify a certain date or period. For example '03-2020' returns profit for the month March of 2020. Other options: 01-01-2020 (full date), 02 (week number), 02-2020 (month), 2020 (year)",
     )
 
     reset = instruction.add_parser("reset", help="Reset database")
 
     reset.add_argument("reset", nargs="?", default=True)
 
-    demo = instruction.add_parser("demo", help="Reset database")
+    demo = instruction.add_parser("demo", help="Load dummy data to experiment")
 
     demo.add_argument("demo", nargs="?", default=True)
 

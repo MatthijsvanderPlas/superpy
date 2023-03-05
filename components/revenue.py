@@ -1,6 +1,7 @@
 from datetime import timedelta
 from utils.getDateFromFile import getDateFromFile
 from utils.utils import (
+    checkInputDate,
     getAllItemsFromSoldCsvByDate,
     getRevenueFromSoldItemsList,
 )
@@ -13,14 +14,15 @@ def handleRevenueRequest(input, date=None):
         day = getDateFromFile("str")
         soldItems = getAllItemsFromSoldCsvByDate(day)
         totalRevenue = getRevenueFromSoldItemsList(soldItems)
-        console.print(f"Today's revenue so far: {totalRevenue}")
+        console.print(f"Today's revenue so far: \u20ac {totalRevenue:.2f}")
 
     if input == "yesterday":
         day = getDateFromFile("date")
         day = day + timedelta(days=-1)
+        day = day.strftime("%d-%m-%Y")
         soldItems = getAllItemsFromSoldCsvByDate(day)
         totalRevenue = getRevenueFromSoldItemsList(soldItems)
-        console.print(f"Yesterdays revenue: {totalRevenue}")
+        console.print(f"Yesterdays revenue: \u20ac {totalRevenue:.2f}")
 
     if input == "date":
-        print(f"Entered date: {date}")
+        checkInputDate(date)
