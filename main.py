@@ -4,7 +4,7 @@ from components.inventory import displayCurrentInventory
 from components.profit import handleProfitRequest
 from components.revenue import handleRevenueRequest
 from utils.advanceDate import advance
-from utils.utils import checkForItemsExpired, resetAll
+from utils.utils import checkForItemsExpired, loadDemoData, resetAll
 from components.buy import handleBuy
 from components.sell import handleSell
 import sys
@@ -63,7 +63,7 @@ def main():
         resetAll()
 
     if hasattr(parsed, "demo"):
-        print("Load program with dummy data")
+        loadDemoData()
 
 
 if __name__ == "__main__":

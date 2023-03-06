@@ -1,6 +1,7 @@
 import csv
-from datetime import datetime
-
+import json
+from datetime import datetime, timedelta
+from rich.table import Table
 from utils.getDateFromFile import getDateFromFile
 
 
@@ -50,7 +51,7 @@ def removeLineFromInventoryCsv(inputId):
         appendRowToInventoryCsv(line["id"], line["name"], line["amount"])
 
 
-def writeLineToSoldCsv(inputId, name, amount, date, price):
+def appendRowToSoldCsv(inputId, name, amount, date, price):
     with open("./csv/sold.csv", "a", newline="") as s:
         writer = csv.writer(s, delimiter=",")
         writer.writerow([inputId, name, amount, date, price])
@@ -119,7 +120,7 @@ def getAllItemsFromSoldCsvByDate(inputDate):
     with open("./csv/sold.csv") as s:
         lines = csv.DictReader(s)
         for line in lines:
-            if inputDate in line["sell_date"]:
+            if line["sell_date"] in inputDate:
                 sold.append(line)
                 continue
             elif line["sell_date"] in inputDate:
@@ -140,7 +141,7 @@ def checkForItemsExpired():
             if day > expirationDate:
                 # product expired (sell at price 0)
                 removeLineFromInventoryCsv(int(line["id"]))
-                writeLineToSoldCsv(
+                appendRowToSoldCsv(
                     line["id"],
                     line["name"],
                     line["amount"],
@@ -181,10 +182,106 @@ def getRevenueFromSoldItemsList(soldList):
 def checkInputDate(inputDate):
 
     if len(inputDate) == 2:
-        print(f"Week number: {inputDate}")
+        if int(inputDate) in range(0, 52):
+            return {"status": True, "type": "week"}
+
     if len(inputDate) == 4:
-        print(f"Year: {inputDate}")
+        if int(inputDate) in range(2020, 2050):
+            return {"status": True, "type": "year"}
+
     if len(inputDate) == 7:
-        print(f"Month: {inputDate}")
+        correctDate = None
+        arrayDate = inputDate.split("-")
+
+        try:
+            newDate = (arrayDate[1], arrayDate[0])
+            correctDate = True
+        except ValueError:
+            correctDate = False
+
+        return {"status": correctDate, "type": "month"}
+
     if len(inputDate) == 10:
-        print(f"Date: {inputDate}")
+        correctDate = None
+        arrayDate = inputDate.split("-")
+
+        try:
+            newDate = (arrayDate[2], arrayDate[1], arrayDate[0])
+            correctDate = True
+        except ValueError:
+            correctDate = False
+
+        return {"status": correctDate, "type": "date"}
+
+
+def returnDatesForWeekNumber(week):
+    day = getDateFromFile("str").split("-")
+    startdate = datetime.strptime(f"1-{week}-{day[2]}", "%w-%W-%Y")
+    dates = [startdate.strftime("%d-%m-%Y")]
+    for i in range(1, 7):
+        day = startdate + timedelta(days=i)
+        dates.append(day.strftime("%d-%m-%Y"))
+    return dates
+
+
+def loadDemoData():
+    # Set the date
+    with open("./day/day.txt", "w") as day:
+        day.write("22-01-2020")
+
+    f = open("./demo/demodata.json")
+    data = json.load(f)
+    # Fill Bought.csv
+    for item in data["bought"]:
+        appendRowToBoughtCsv(
+            item["id"],
+            item["name"],
+            item["buy_date"],
+            item["price"],
+            item["amount"],
+            item["expiration"],
+        )
+    # Fill Sold.csv
+    for item in data["sold"]:
+        appendRowToSoldCsv(
+            item["id"],
+            item["name"],
+            item["amount"],
+            item["sell_date"],
+            item["sell_price"],
+        )
+    # Fill Inventory.csv
+    for item in data["inventory"]:
+        appendRowToInventoryCsv(item["id"], item["name"], item["amount"])
+
+
+def returnTableOfItems(data, type):
+    table = Table(min_width=100)
+
+    table.add_column("Product Name", style="magenta", no_wrap=True)
+    table.add_column("Amount", justify="center", style="blue", no_wrap=True)
+    if type != "revenue":
+        table.add_column("Buy Price", justify="right", style="green", no_wrap=True)
+    table.add_column("Sell Price", justify="right", style="green", no_wrap=True)
+    table.add_column(
+        "Date of Purchase/Expired", justify="center", style="yellow", no_wrap=True
+    )
+    for item in data:
+        boughtItem = getItemFromBoughtCsvById(int(item["id"]))
+        if type != "revenue":
+            table.add_row(
+                item["name"],
+                item["amount"],
+                "\u20ac " + boughtItem["price"],
+                "\u20ac " + item["sell_price"],
+                item["sell_date"],
+            )
+        else:
+            table.add_row(
+                item["name"],
+                item["amount"],
+                "\u20ac " + item["sell_price"],
+                item["sell_date"],
+            )
+
+    return table

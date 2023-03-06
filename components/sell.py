@@ -8,7 +8,7 @@ from utils.utils import (
     adjustLineInInventoryCsv,
     getAllItemsByNameFromInventoryCsv,
     removeLineFromInventoryCsv,
-    writeLineToSoldCsv,
+    appendRowToSoldCsv,
 )
 
 sys.path.insert(0, "../csv")
@@ -40,7 +40,7 @@ def handleSell(inputObj):
                     inStockAmount -= stock["amount"]
                     sold += stock["amount"]
                     # remove the line from the inventory.csv and write the into sell.csv
-                    writeLineToSoldCsv(stock["id"], name, stock["amount"], day, price)
+                    appendRowToSoldCsv(stock["id"], name, stock["amount"], day, price)
                     removeLineFromInventoryCsv(int(stock["id"]))
                     continue
                 elif inStockAmount == 0:
@@ -48,7 +48,7 @@ def handleSell(inputObj):
                     amount = 0
                     break
                 else:
-                    writeLineToSoldCsv(stock["id"], name, amount, day, price)
+                    appendRowToSoldCsv(stock["id"], name, amount, day, price)
                     if amount == stock["amount"]:
                         removeLineFromInventoryCsv(int(stock["id"]))
                     else:
