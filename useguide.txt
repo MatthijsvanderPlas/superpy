@@ -19,9 +19,9 @@ python main.py buy
 
 Now there are a few options to use as arguments:
 
---name or -n          "Product_name"
+--name or -n          "Product name"
 
---price or -p         "Price of the product"
+--price or -p         "Buying price of the product"
 
 Optionally you can add the following arguments as well:
 
@@ -29,8 +29,27 @@ Optionally you can add the following arguments as well:
 
 --expiration or -e    "Expiration in days from current day" (if not supplied it will be 10 days)
 
+The item is given a "random" id and add to the bought.csv and to the inventory.csv 
+only the id, name and amount are added to have a "current" and up to date inventory.
+
 
 - Sell
+
+python main.py buy 
+
+Now there are a few options to use as arguments:
+
+--name or -n          "Product name"
+
+--price or -p         "Selling price of the product"
+
+Optionally you can add the following arguments as well:
+
+--amount or -a        "Amount of products" (if not supplied it will be 1 product)
+
+The selling goes through the entire inventory and collects all the products with the same name or returns a not in stock message.
+The "oldest" products will be sold first until the asked amount is met or if there is not enough in stock to meet the demand it will sell everything and notify the user.
+
 
 
 - Report
