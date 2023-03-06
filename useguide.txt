@@ -11,6 +11,9 @@ pip install -r /path/to/requirements.txt
 Now run this command to enter the virtual environment to start hacking away:
 source ./env/bin/activate
 
+
+
+
 - Buy
 
 To buy a product simply use:
@@ -32,6 +35,13 @@ Optionally you can add the following arguments as well:
 The item is given a "random" id and add to the bought.csv and to the inventory.csv 
 only the id, name and amount are added to have a "current" and up to date inventory.
 
+Examples:
+
+python main.py buy -n Banana -p 0.55                This will buy a single(default) banana for 0.55 that expires in 10 days(default)
+
+python main.py buy -n Banana -p 0.45 -a 15 -e 5     This will buy 15 bananas at 0.45 that expire in 5 days.
+
+
 
 - Sell
 
@@ -48,15 +58,84 @@ Optionally you can add the following arguments as well:
 --amount or -a        "Amount of products" (if not supplied it will be 1 product)
 
 The selling goes through the entire inventory and collects all the products with the same name or returns a not in stock message.
-The "oldest" products will be sold first until the asked amount is met or if there is not enough in stock to meet the demand it will sell everything and notify the user.
+The "oldest" products will be sold first until the asked amount is met or if there is not enough in stock to meet the 
+demand it will sell everything and notify the user.
+
+Examples:
+
+python sell -n banana -p 0.75                     This will sell 1 banana for 0.75
+
+python sell -n banana -p 0.85 -a 10               This will sell 10 bananas for 0.85
+
+python sell -n banana -p 0.85 -a 100              This will most likely sell all the bananas in the inventory but not a 100 for 0.85 
+
+
+
+- Advance
+
+Optionally enter the amount of days to advance with:
+
+--date or -d            "Amount of days to advance the internal date"
+
+Able to advance the internal date of the program.
+
+Examples:
+
+python main.py advance            Advances the program by a single day
+
+python main.py advance -d 5       Advances the program by 5 days
 
 
 
 - Report
 
+There are three types of reports to get from the program: [ inventory | revenue | profit ]
+
+Inventory:
+
+python main.py report inventory 
+
+Prints out a table of the current products in stock at the store. 
+It is a nice looking table (rich library) with a top the current date.
+
+
+Revenue and Profit:
+
+For both these reports you have several options available. If no option is selected it will simply output the report for the current day.
+
+--today                                       Gives the report from today of either the revenue or the profit in a table overview
+
+--yesterday                                   Gives the report from yesterday of either the revenue or the profit in a table overview
+
+--date [ day | week | month | year ]          Gives the report from the date given of either the revenue or the profit in a table overview
+
+For the --date option you can enter several different options:
+
+the format for a single day: 
+01-01-2020 (any actual date in this format dd-mm-YYYY will work)
+
+The format for a week by its number:
+01 till 53 (note that the program only takes double digits)
+
+The format for a month:
+01-2020 (any actual month (01-12) followed by the year will work mm-YYYY)
+
+The format for a year:
+2020 (any actual month (currently limited to 2020-2050))
+
 
 - Reset
+
+Able to complete wipe all csv files and reset the date back to 01-01-2020. 
+So be careful as you will loose all your data.
+
+python main.py reset
 
 
 - Demo
 
+
+So as to easily play around and test the program I implemented a demo date option.
+This loads demo data from a .json file and sets the date.
+
+python main.py demo
