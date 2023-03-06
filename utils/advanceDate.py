@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from utils.getDateFromFile import getDateFromFile
-from console import console, err_console
+from components.console import console, err_console
 
 
 def advance(days):

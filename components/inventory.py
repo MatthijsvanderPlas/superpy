@@ -1,5 +1,5 @@
 import csv
-from console import console
+from components.console import console
 from utils.getDateFromFile import getDateFromFile
 from rich.table import Table
 from rich.align import Align

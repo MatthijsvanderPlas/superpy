@@ -40,6 +40,7 @@ def main():
     if hasattr(parsed, "report"):
         if hasattr(parsed, "inventory"):
             displayCurrentInventory()
+
         if hasattr(parsed, "revenue"):
             if parsed.today:
                 handleRevenueRequest("today")
@@ -49,6 +50,7 @@ def main():
                 handleRevenueRequest("date", parsed.date)
             else:
                 handleRevenueRequest("today")
+
         if hasattr(parsed, "profit"):
             if parsed.today:
                 handleProfitRequest("today")

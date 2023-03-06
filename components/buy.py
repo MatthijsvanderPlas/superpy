@@ -1,8 +1,7 @@
-import csv
 import sys
 import random
-from datetime import datetime, timedelta
-from console import console
+from datetime import timedelta
+from components.console import console
 from utils.getDateFromFile import getDateFromFile
 from utils.utils import appendRowToBoughtCsv, appendRowToInventoryCsv
 

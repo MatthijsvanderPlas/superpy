@@ -1,8 +1,6 @@
-import csv
 from functools import reduce
 import sys
-from datetime import datetime
-from console import console, err_console
+from components.console import console, err_console
 from utils.getDateFromFile import getDateFromFile
 from utils.utils import (
     adjustLineInInventoryCsv,

@@ -9,7 +9,7 @@ from utils.utils import (
     returnTableOfItems,
 )
 from rich.align import Align
-from console import console, err_console
+from components.console import console, err_console
 
 
 def handleRevenueRequest(input, date=None):
