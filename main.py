@@ -26,7 +26,6 @@ def main():
     # Buy command was given and now parsed
     if hasattr(parsed, "buy"):
         handleBuy(parsed)
-        # displayInventory()
 
     if hasattr(parsed, "sell"):
         handleSell(parsed)

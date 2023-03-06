@@ -1,0 +1,43 @@
+So this the SuperPy App.
+
+Installation:
+
+Clone the repository onto your local drive where you would like.
+git clone https://github.com/MatthijsvanderPlas/superpy.git
+
+Then run the following command to install all the needed 
+pip install -r /path/to/requirements.txt
+
+Now run this command to enter the virtual environment to start hacking away:
+source ./env/bin/activate
+
+- Buy
+
+To buy a product simply use:
+
+python main.py buy 
+
+Now there are a few options to use as arguments:
+
+--name or -n          "Product_name"
+
+--price or -p         "Price of the product"
+
+Optionally you can add the following arguments as well:
+
+--amount or -a        "Amount of products" (if not supplied it will be 1 product)
+
+--expiration or -e    "Expiration in days from current day" (if not supplied it will be 10 days)
+
+
+- Sell
+
+
+- Report
+
+
+- Reset
+
+
+- Demo
+
