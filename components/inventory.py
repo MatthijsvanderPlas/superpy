@@ -16,15 +16,17 @@ def displayCurrentInventory():
         for line in lines:
             if count == 0:
                 table.add_column("Product Name", style="magenta", no_wrap=True)
-                table.add_column("Amount", style="blue", no_wrap=True)
+                table.add_column("Amount", justify="center", style="blue", no_wrap=True)
                 table.add_column("Price", justify="right", style="green", no_wrap=True)
                 table.add_column(
-                    "Expiration", justify="center", style="red", no_wrap=True
+                    "Expiration", justify="center", style="yellow", no_wrap=True
                 )
                 count += 1
             else:
                 item = getItemFromBoughtCsvById(int(line[0]))
-                table.add_row(line[1], line[2], item["price"], item["expiration"])
+                table.add_row(
+                    line[1], line[2], "\u20ac " + item["price"], item["expiration"]
+                )
 
     console.rule(f"[bold green]Inventory: {day}", style="red")
     console.print(Align.center(table))

@@ -120,13 +120,20 @@ def getAllItemsFromSoldCsvByDate(inputDate):
     with open("./csv/sold.csv") as s:
         lines = csv.DictReader(s)
         for line in lines:
+            if inputDate in line["sell_date"]:
+                sold.append(line)
+                continue
+    return sold
+
+
+def getAllItemsFromSoldCsvByDateArray(inputDate):
+    sold = []
+    with open("./csv/sold.csv") as s:
+        lines = csv.DictReader(s)
+        for line in lines:
             if line["sell_date"] in inputDate:
                 sold.append(line)
                 continue
-            elif line["sell_date"] in inputDate:
-                sold.append(line)
-                continue
-
     return sold
 
 

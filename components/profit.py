@@ -3,6 +3,7 @@ from utils.getDateFromFile import getDateFromFile
 from utils.utils import (
     checkInputDate,
     getAllItemsFromSoldCsvByDate,
+    getAllItemsFromSoldCsvByDateArray,
     getProfitFromSoldItemsList,
     returnDatesForWeekNumber,
     returnTableOfItems,
@@ -17,7 +18,7 @@ def handleProfitRequest(input, date=None):
         day = getDateFromFile("str")
         soldItems = getAllItemsFromSoldCsvByDate(day)
         totalProfit = getProfitFromSoldItemsList(soldItems)
-        revenueTable = returnTableOfItems(soldItems, "profit")
+        profitTable = returnTableOfItems(soldItems, "profit")
         date = day
         profitLine = f"Today's profit so far: \u20ac {totalProfit:.2f}"
 
@@ -27,29 +28,26 @@ def handleProfitRequest(input, date=None):
         day = day.strftime("%d-%m-%Y")
         soldItems = getAllItemsFromSoldCsvByDate(day)
         totalProfit = getProfitFromSoldItemsList(soldItems)
-        revenueTable = returnTableOfItems(soldItems, "profit")
+        profitTable = returnTableOfItems(soldItems, "profit")
         date = day
         profitLine = f"Yesterdays profit: \u20ac {totalProfit:.2f}"
 
-        if input == "date":
-            status = checkInputDate(date)
+    if input == "date":
+        status = checkInputDate(date)
 
-            if status["status"]:
-                if status["type"] == "week":
-                    dates = returnDatesForWeekNumber(date)
-                    soldItems = getAllItemsFromSoldCsvByDate(dates)
-                    totalRevenue = getProfitFromSoldItemsList(soldItems)
-                    revenueTable = returnTableOfItems(soldItems, "profit")
-                    profitLine = (
-                        f"[blue]{date}[/blue] profit: \u20ac {totalRevenue:.2f}"
-                    )
-                else:
-                    soldItems = getAllItemsFromSoldCsvByDate(date)
-                    totalRevenue = getProfitFromSoldItemsList(soldItems)
-                    revenueTable = returnTableOfItems(soldItems, "revenue")
-                    profitLine = (
-                        f"[blue]{date}[/blue] profit: \u20ac {totalRevenue:.2f}"
-                    )
+        if status["status"]:
+            if status["type"] == "week":
+                dates = returnDatesForWeekNumber(int(date) - 1)
+                soldItems = getAllItemsFromSoldCsvByDateArray(dates)
+                totalRevenue = getProfitFromSoldItemsList(soldItems)
+                profitTable = returnTableOfItems(soldItems, "profit")
+                profitLine = f"[blue]{date}[/blue] profit: \u20ac {totalRevenue:.2f}"
+            else:
+                soldItems = getAllItemsFromSoldCsvByDate(date)
+                totalRevenue = getProfitFromSoldItemsList(soldItems)
+                profitTable = returnTableOfItems(soldItems, "profit")
+                profitLine = f"[blue]{date}[/blue] profit: \u20ac {totalRevenue:.2f}"
+
     console.rule(f"[bold green]Profit: {date}", style="red")
-    console.print(Align.center(revenueTable))
+    console.print(Align.center(profitTable))
     console.print(Align.center(profitLine))
