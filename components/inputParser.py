@@ -26,7 +26,7 @@ def create_parser():
         help="Basic action type for buying an item.",
     )
 
-    buy.add_argument("buy", nargs="?", default=True)
+    buy.add_argument("buy", action="store_true", default=False)
 
     buy.add_argument(
         "--name",
@@ -67,7 +67,7 @@ def create_parser():
         help="Basic action type for selling an item.",
     )
 
-    sell.add_argument("sell", nargs="?", default=True)
+    sell.add_argument("sell", action="store_true", default=False)
 
     sell.add_argument(
         "--name",
@@ -100,7 +100,7 @@ def create_parser():
         help="Advance day by X days (default=1)",
     )
 
-    advance.add_argument("advance", nargs="?", default=True)
+    advance.add_argument("advance", action="store_true", default=False)
 
     advance.add_argument(
         "-d",

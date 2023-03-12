@@ -59,19 +59,19 @@ def appendRowToSoldCsv(inputId, name, amount, date, price):
 
 def resetInventory():
     with open("./csv/inventory.csv", "w") as inv:
-        writer = csv.writer(inv)
+        writer = csv.writer(inv, lineterminator="")
         writer.writerow(["id", "name", "amount"])
 
 
 def resetBought():
     with open("./csv/bought.csv", "w") as inv:
-        writer = csv.writer(inv)
+        writer = csv.writer(inv, lineterminator="")
         writer.writerow(["id", "name", "buy_date", "price", "amount", "expiration"])
 
 
 def resetSold():
     with open("./csv/sold.csv", "w") as inv:
-        writer = csv.writer(inv)
+        writer = csv.writer(inv, lineterminator="")
         writer.writerow(["id", "name", "amount", "sell_date", "sell_price"])
 
 
